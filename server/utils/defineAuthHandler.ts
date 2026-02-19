@@ -15,7 +15,7 @@ export default function defineAuthenticatedEventHandler<T>(handler: (event: Auth
     if (!cookie) {
       throw createError({
         statusCode: 401,
-        statusMessage: 'Unauthorized1',
+        statusMessage: 'Unauthorized',
       });
     }
 
@@ -24,7 +24,7 @@ export default function defineAuthenticatedEventHandler<T>(handler: (event: Auth
     if (!verify) {
       throw createError({
         statusCode: 401,
-        statusMessage: 'Unauthorized2',
+        statusMessage: 'Unauthorized',
       });
     }
 

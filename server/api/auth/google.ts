@@ -3,9 +3,9 @@ import type { GoogleTokenResponse, GoogleUserInfo } from '~~/shared/types/google
 import { z } from 'zod';
 
 export default defineEventHandler(async (event) => {
-  const CLIENT_ID = process.env.CLIENT_ID!;
-  const REDIRECT_URL = process.env.REDIRECT_URL!;
-  const CLIENT_SECRET = 'YOUR_CLIENT_SECRET';
+  const GOOGLE_CLIENT_ID = process.env.GOOGLE_CLIENT_ID!;
+  const GOOGLE_CLIENT_SECRET = process.env.GOOGLE_CLIENT_SECRET!;
+  const SITE_URL = process.env.SITE_URL || 'http://localhost:4242';
 
   const oauthSchema = z.object({
     code: z.string(),
@@ -18,10 +18,9 @@ export default defineEventHandler(async (event) => {
     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
     body: new URLSearchParams({
       code,
-      client_id:
-        process.env.GOOGLE_CLIENT_ID || 'REDACTED_GOOGLE_CLIENT_ID',
-      client_secret: process.env.GOOGLE_CLIENT_SECRET || 'REDACTED_GOOGLE_CLIENT_SECRET',
-      redirect_uri: 'http://localhost:4242/auth/callback',
+      client_id: GOOGLE_CLIENT_ID,
+      client_secret: GOOGLE_CLIENT_SECRET,
+      redirect_uri: `${SITE_URL}/auth/callback`,
       grant_type: 'authorization_code',
     }).toString(),
   }).catch((err) => {
@@ -52,10 +51,10 @@ export default defineEventHandler(async (event) => {
   const sessionToken = await createSession(userId);
 
   setCookie(event, 'session', sessionToken, {
-    httpOnly: true, // Can't be accessed by JavaScript (XSS protection)
-    secure: true, // Only sent over HTTPS
-    sameSite: 'lax', // CSRF protection
-    maxAge: 60 * 60 * 24 * 7, // 7 days
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'lax',
+    maxAge: 60 * 60 * 24 * 7,
     path: '/',
   });
 

@@ -1,15 +1,16 @@
-import crypto from 'crypto';
 import * as jose from 'jose';
-import { errors } from 'jose';
-import { th } from 'zod/v4/locales';
-const secret = new TextEncoder().encode('cc7e0d44fd473002f1c42167459001140ec6389b7353f8088f4d9a95f2f596f2');
+
+const JWT_SECRET = process.env.JWT_SECRET;
+if (!JWT_SECRET) {
+  throw new Error('JWT_SECRET environment variable is required');
+}
+
+const secret = new TextEncoder().encode(JWT_SECRET);
 const SITE_URL = process.env.SITE_URL || 'http://localhost:4242';
 
 export const createSession = async (userId: number | undefined) => {
-  const alg = 'HS256';
-
   const jwt = await new jose.SignJWT({ userId })
-    .setProtectedHeader({ alg })
+    .setProtectedHeader({ alg: 'HS256' })
     .setIssuedAt()
     .setIssuer(SITE_URL)
     .setAudience(SITE_URL)
@@ -23,10 +24,7 @@ export const verifySession = async (token: string): Promise<string | null> => {
   try {
     const { payload } = await jose.jwtVerify(token, secret);
     return payload.userId as string;
-  } catch (err) {
-    if (err instanceof errors.JWTExpired) {
-      throw new Error('Session expired');
-    }
+  } catch {
     return null;
   }
 };

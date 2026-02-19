@@ -5,6 +5,13 @@ export default defineNuxtConfig({
   },
   modules: ['@nuxt/eslint', '@nuxt/ui', '@pinia/nuxt'],
 
+  runtimeConfig: {
+    public: {
+      googleClientId: process.env.GOOGLE_CLIENT_ID || '',
+      siteUrl: process.env.SITE_URL || 'http://localhost:4242',
+    },
+  },
+
   devtools: {
     enabled: true,
   },

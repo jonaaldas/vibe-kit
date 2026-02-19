@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import type { GoogleOAuthParams } from '~~/shared/types/google'
 
+const config = useRuntimeConfig()
+
 const providers = [
   {
     label: 'Continue with Google',
@@ -9,8 +11,8 @@ const providers = [
     variant: 'outline' as const,
     onClick: () => {
       const params: GoogleOAuthParams = {
-        client_id: 'REDACTED_GOOGLE_CLIENT_ID',
-        redirect_uri: 'http://localhost:4242/auth/callback',
+        client_id: config.public.googleClientId,
+        redirect_uri: `${config.public.siteUrl}/auth/callback`,
         response_type: 'code',
         scope: 'email profile',
         access_type: 'offline',

@@ -1,4 +1,4 @@
-import type { GoogleUserInfo } from '../../shared/types/google';
+import type { GoogleUserInfo } from '~~/shared/types/google';
 
 export const useAuthStore = defineStore('auth', () => {
   const user: Ref<(GoogleUserInfo & { id: string }) | null> = ref(null);
