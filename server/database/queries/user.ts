@@ -1,15 +1,15 @@
-import { db } from '../../utils/db';
-import { users } from '../../database/schema';
-import { eq } from 'drizzle-orm';
-import { GoogleUserInfo } from '../../../shared/types/google';
+import { db } from '../../utils/db'
+import { users } from '../../database/schema'
+import { eq } from 'drizzle-orm'
+import type { GoogleUserInfo } from '../../../shared/types/google'
 
 export const getUserByEmail = async (body: { email: string }) => {
-  const user = await db.select().from(users).where(eq(users.email, body.email));
+  const user = await db.select().from(users).where(eq(users.email, body.email))
   if (user.length == 0) {
-    return [];
+    return []
   }
-  return user;
-};
+  return user
+}
 
 export const saveUser = async (user: GoogleUserInfo) => {
   return await db
@@ -22,7 +22,7 @@ export const saveUser = async (user: GoogleUserInfo) => {
       picture: user.picture,
       verified_email: user.verified_email ? 1 : 0,
       updatedAt: new Date(),
-      googleId: user.id,
+      googleId: user.id
     })
-    .returning({ userId: users.id });
-};
+    .returning({ userId: users.id })
+}

@@ -1,4 +1,4 @@
-import { defineConfig } from 'drizzle-kit';
+import { defineConfig } from 'drizzle-kit'
 
 export default defineConfig({
   schema: './server/database/schema.ts',
@@ -8,4 +8,4 @@ export default defineConfig({
     url: process.env.DATABASE_URL!,
     authToken: process.env.DATABASE_TOKEN
   }
-});
+})

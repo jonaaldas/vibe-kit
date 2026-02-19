@@ -20,9 +20,11 @@
     "@libsql/client": "^0.17.0",
     "@nuxt/ui": "^4.4.0",
     "@pinia/nuxt": "0.11.3",
+    "@stripe/stripe-js": "^8.7.0",
     "drizzle-orm": "^0.45.1",
     "jose": "^6.1.3",
     "nuxt": "^4.3.1",
+    "stripe": "^20.3.1",
     "tailwindcss": "^4.1.18",
     "zod": "^4.3.6"
   },

@@ -1,5 +1,5 @@
-import defineAuthenticatedEventHandler from '../utils/defineAuthHandler';
+import defineAuthenticatedEventHandler from '../utils/defineAuthHandler'
 
 export default defineAuthenticatedEventHandler((event) => {
-  return { msg: 'Hello World', user: event.context.user };
-});
+  return { msg: 'Hello World', user: event.context.user }
+})

@@ -6,16 +6,16 @@
 
 <script setup>
 onMounted(async () => {
-  const query = new URLSearchParams(window.location.search);
-  const code = query.get('code');
+  const query = new URLSearchParams(window.location.search)
+  const code = query.get('code')
 
   const response = await $fetch('/api/auth/google', {
     method: 'POST',
-    body: { code },
-  });
+    body: { code }
+  })
 
   if (response.res === true) {
-    await navigateTo('/protected');
+    await navigateTo('/protected')
   }
-});
+})
 </script>

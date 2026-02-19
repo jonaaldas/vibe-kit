@@ -1,4 +1,4 @@
 export default defineEventHandler((event) => {
-  deleteCookie(event, 'session');
-  return { ok: true };
-});
+  deleteCookie(event, 'session')
+  return { ok: true }
+})

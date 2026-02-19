@@ -1,12 +1,12 @@
-import * as jose from 'jose';
+import * as jose from 'jose'
 
-const JWT_SECRET = process.env.JWT_SECRET;
+const JWT_SECRET = process.env.JWT_SECRET
 if (!JWT_SECRET) {
-  throw new Error('JWT_SECRET environment variable is required');
+  throw new Error('JWT_SECRET environment variable is required')
 }
 
-const secret = new TextEncoder().encode(JWT_SECRET);
-const SITE_URL = process.env.SITE_URL || 'http://localhost:4242';
+const secret = new TextEncoder().encode(JWT_SECRET)
+const SITE_URL = process.env.SITE_URL || 'http://localhost:4242'
 
 export const createSession = async (userId: number | undefined) => {
   const jwt = await new jose.SignJWT({ userId })
@@ -15,16 +15,16 @@ export const createSession = async (userId: number | undefined) => {
     .setIssuer(SITE_URL)
     .setAudience(SITE_URL)
     .setExpirationTime('7days')
-    .sign(secret);
+    .sign(secret)
 
-  return jwt;
-};
+  return jwt
+}
 
 export const verifySession = async (token: string): Promise<string | null> => {
   try {
-    const { payload } = await jose.jwtVerify(token, secret);
-    return payload.userId as string;
+    const { payload } = await jose.jwtVerify(token, secret)
+    return payload.userId as string
   } catch {
-    return null;
+    return null
   }
-};
+}
