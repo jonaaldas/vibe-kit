@@ -6,7 +6,6 @@
 onMounted(async () => {
   const query = new URLSearchParams(window.location.search);
   const code = query.get('code');
-  console.log(code);
 
   const response = await $fetch('/api/auth/register', {
     method: 'POST',
@@ -15,6 +14,8 @@ onMounted(async () => {
     },
   });
 
-  console.log(response);
+  if (response.res == true) {
+    await navigateTo('/protected');
+  }
 });
 </script>
